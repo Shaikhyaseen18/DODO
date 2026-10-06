@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { createClient, getSupabaseConfig } from '@/lib/supabase/client'
 
 interface HeaderProps {
   operatorName?: string
@@ -9,10 +9,18 @@ interface HeaderProps {
 
 export default function Header({ operatorName = 'Operator' }: HeaderProps) {
   const router = useRouter()
-  const supabase = createClient()
+  const { url, key } = getSupabaseConfig()
+  const isDemoMode = !url || !key || url === 'https://your-project.supabase.co'
+  const supabase = isDemoMode ? null : createClient()
 
   async function handleLogout() {
-    await supabase.auth.signOut()
+    if (isDemoMode) {
+      router.push('/operator/login')
+      router.refresh()
+      return
+    }
+
+    await supabase?.auth.signOut()
     router.push('/operator/login')
     router.refresh()
   }

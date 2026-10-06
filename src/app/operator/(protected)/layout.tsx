@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getSupabaseConfig } from '@/lib/supabase/server'
 import Sidebar from '@/components/operator/layout/Sidebar'
 import Header from '@/components/operator/layout/Header'
 
@@ -10,9 +10,8 @@ export const metadata = {
 
 // Demo mode: if Supabase env vars are placeholder values, skip auth check.
 // Replace with real values in .env.local to enable real authentication.
-const DEMO_MODE =
-  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://your-project.supabase.co'
+const { url, key } = getSupabaseConfig()
+const DEMO_MODE = !url || !key || url === 'https://your-project.supabase.co'
 
 export default async function OperatorLayout({
   children,

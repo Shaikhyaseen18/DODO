@@ -33,6 +33,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Configure the Supabase environment variables required by the operator app before using authenticated features.
 
+### AI Trip Planner provider configuration
+
+The operator sidebar includes an AI Trip Planner. It uses the server-side AI settings above to create itinerary suggestions. To include cited web research, configure `TOURFLOW_SEARCH_API_KEY` with a Tavily API key. To check live flight offers, configure `AMADEUS_CLIENT_ID`, `AMADEUS_CLIENT_SECRET`, and `AMADEUS_BASE_URL`; the planner requires 3-letter IATA codes for flight searches. Keep these credentials server-side and out of `NEXT_PUBLIC_` variables.
+
+Train/bus searches and Ola, Uber, and Rapido currently open provider/search pages; their prices are not quoted in TourFlow because those providers do not have credentials/API integrations configured here. The planner does not fabricate live prices.
+
 ## Run the traveler application
 
 From the repository root:

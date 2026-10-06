@@ -2,14 +2,13 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { createClient, getSupabaseConfig } from '@/lib/supabase/client'
 
 type LoginState = 'idle' | 'loading' | 'error'
 
 // Demo mode when Supabase isn't configured yet
-const DEMO_MODE =
-  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://your-project.supabase.co'
+const { url, key } = getSupabaseConfig()
+const DEMO_MODE = !url || !key || url === 'https://your-project.supabase.co'
 
 const DEMO_EMAIL = 'demo@tourflow.ai'
 const DEMO_PASS = 'demo1234'
